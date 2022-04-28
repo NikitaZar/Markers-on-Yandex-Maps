@@ -1,4 +1,4 @@
-package com.example.markersonyandexmaps
+package ru.maps.markersonyandexmaps
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

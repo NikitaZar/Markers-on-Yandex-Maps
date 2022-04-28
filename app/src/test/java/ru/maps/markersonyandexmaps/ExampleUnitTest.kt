@@ -1,4 +1,4 @@
-package com.example.markersonyandexmaps
+package ru.maps.markersonyandexmaps
 
 import org.junit.Test
 
