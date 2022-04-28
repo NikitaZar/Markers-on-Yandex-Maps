@@ -9,14 +9,16 @@ import kotlinx.coroutines.launch
 import ru.maps.markersonyandexmaps.dto.Marker
 import ru.maps.markersonyandexmaps.model.FeedModel
 import ru.maps.markersonyandexmaps.repository.MarkerRepository
+import ru.maps.markersonyandexmaps.repository.MarkerRepositoryImpl
 import ru.maps.markersonyandexmaps.util.SingleLiveEvent
 import javax.inject.Inject
 
 private val empty = Marker(
     id = 0,
-    description = ""
+    description = "",
+    latitude = 0F,
+    longitude = 0F
 )
-
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel

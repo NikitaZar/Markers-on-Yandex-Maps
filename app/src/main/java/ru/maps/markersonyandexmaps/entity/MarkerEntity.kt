@@ -8,15 +8,19 @@ import ru.maps.markersonyandexmaps.dto.Marker
 data class MarkerEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
-    val description: String
+    val description: String,
+    val latitude: Float,
+    val longitude: Float,
 ) {
-    fun toDto() = Marker(id, description)
+    fun toDto() = Marker(id, description, latitude, longitude)
 
     companion object {
         fun fromDto(dto: Marker) =
             MarkerEntity(
                 dto.id,
-                dto.description
+                dto.description,
+                dto.latitude,
+                dto.longitude
             )
     }
 }
