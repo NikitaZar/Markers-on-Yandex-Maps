@@ -1,6 +1,7 @@
 package ru.maps.markersonyandexmaps.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,9 +37,9 @@ class EditFragment : Fragment() {
             binding.longitude.editText?.setText(String.format("%.7f", longitude))
         }
 
-        val description = binding.description.text.toString()
-
         binding.btCreate.setOnClickListener {
+            val description = binding.description.editText?.text.toString()
+            Log.i("myLocation", "description: $description")
             viewModel.edit(Marker(0, description, latitude, longitude))
             viewModel.save()
             findNavController().navigateUp()

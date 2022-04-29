@@ -1,5 +1,6 @@
 package ru.maps.markersonyandexmaps.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -15,9 +16,9 @@ interface MarkerDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(post: MarkerEntity): Long
 
-    @Query("DELETE FROM MarkerEntity WHERE id = :id")
+    @Query("DELETE FROM MarkerEntity WHERE id =:id")
     suspend fun remove(id: Long)
 
     @Query("SELECT * FROM MarkerEntity WHERE id = :id")
-    suspend fun getMarker(id: Long)
+    suspend fun getMarker(id: Long): MarkerEntity
 }
