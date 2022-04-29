@@ -3,8 +3,12 @@ package ru.maps.markersonyandexmaps.ui
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import ru.maps.markersonyandexmaps.R
 import ru.maps.markersonyandexmaps.databinding.ActivityAppBinding
@@ -14,23 +18,14 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupBottomNavigation()
+    }
 
-        val binding = ActivityAppBinding.inflate(layoutInflater)
-
-        binding.bottomNavigation.setOnItemReselectedListener { item ->
-            Log.i("navigate", "${item.itemId}")
-            val fragmentId = when (item.itemId) {
-                R.id.page_list -> R.id.listFragment
-                R.id.page_map -> R.id.mapFragment
-                else -> null
-            }
-            fragmentId?.let {
-                findNavController(R.id.nav_host_fragment).navigate(
-                    it,
-                    null,
-                    NavOptions.Builder().setLaunchSingleTop(true).build()
-                )
-            }
-        }
+    private fun setupBottomNavigation() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        findViewById<BottomNavigationView>(R.id.bottom_navigation)
+            .setupWithNavController(navController)
     }
 }
