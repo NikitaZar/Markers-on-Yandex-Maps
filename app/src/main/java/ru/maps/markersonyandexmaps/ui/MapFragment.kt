@@ -9,30 +9,28 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.app.ActivityCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.LocationServices
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKit
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
-import com.yandex.mapkit.layers.ObjectEvent
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.InputListener
 import com.yandex.mapkit.map.Map
 import com.yandex.mapkit.map.MapObjectCollection
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.mapkit.user_location.UserLocationLayer
-import com.yandex.mapkit.user_location.UserLocationObjectListener
-import com.yandex.mapkit.user_location.UserLocationView
 import com.yandex.runtime.image.ImageProvider
-import com.yandex.runtime.ui_view.ViewProvider
 import dagger.hilt.android.AndroidEntryPoint
 import ru.maps.markersonyandexmaps.R
+import ru.maps.markersonyandexmaps.application.GlobalConstants
 import ru.maps.markersonyandexmaps.databinding.FragmentMapBinding
 import ru.maps.markersonyandexmaps.viewModel.MarkerViewModel
 
@@ -51,7 +49,14 @@ class MapFragment : Fragment() {
         }
 
         override fun onMapLongTap(map: Map, point: Point) {
-            drawPlacemark(point, mapObjects)
+            setFragmentResult(
+                GlobalConstants.KEY_POINT,
+                bundleOf(
+                    GlobalConstants.KEY_LATITUDE to point.latitude,
+                    GlobalConstants.KEY_LONGITUDE to point.longitude
+                )
+            )
+            findNavController().navigate(R.id.action_mapFragment_to_editFragment)
         }
     }
 

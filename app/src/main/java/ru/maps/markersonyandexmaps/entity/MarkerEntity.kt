@@ -9,8 +9,8 @@ data class MarkerEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val description: String,
-    val latitude: Float,
-    val longitude: Float,
+    val latitude: Double,
+    val longitude: Double,
 ) {
     fun toDto() = Marker(id, description, latitude, longitude)
 

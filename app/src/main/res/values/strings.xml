@@ -2,4 +2,9 @@
     <string name="app_name">Markers on Yandex Maps</string>
     <string name="map">Map</string>
     <string name="list">List</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="description">Description</string>
+    <string name="add_marker_information">Add marker information</string>
+    <string name="create">Create</string>
 </resources>
