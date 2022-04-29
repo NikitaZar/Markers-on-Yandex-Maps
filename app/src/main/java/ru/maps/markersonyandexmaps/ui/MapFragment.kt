@@ -87,6 +87,17 @@ class MapFragment : Fragment() {
             isVisible = true
         }
 
+        viewModel.data.observe(viewLifecycleOwner) { data ->
+            if (data.markers.isNotEmpty()) {
+                mapView.map.mapObjects.clear()
+                mapObjects = mapView.map.mapObjects.addCollection()
+                data.markers.forEach { marker ->
+                    val point = Point(marker.latitude, marker.longitude)
+                    drawPlacemark(point, mapObjects)
+                }
+            }
+        }
+
         return binding.root
     }
 
