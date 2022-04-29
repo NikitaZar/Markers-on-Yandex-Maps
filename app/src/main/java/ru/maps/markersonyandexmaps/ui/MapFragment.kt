@@ -3,10 +3,7 @@ package ru.maps.markersonyandexmaps.ui
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,10 +20,16 @@ import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKit
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
+import com.yandex.mapkit.layers.ObjectEvent
 import com.yandex.mapkit.map.CameraPosition
+import com.yandex.mapkit.map.InputListener
+import com.yandex.mapkit.map.Map
 import com.yandex.mapkit.map.MapObjectCollection
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.mapkit.user_location.UserLocationLayer
+import com.yandex.mapkit.user_location.UserLocationObjectListener
+import com.yandex.mapkit.user_location.UserLocationView
+import com.yandex.runtime.image.ImageProvider
 import com.yandex.runtime.ui_view.ViewProvider
 import dagger.hilt.android.AndroidEntryPoint
 import ru.maps.markersonyandexmaps.R
@@ -42,6 +45,15 @@ class MapFragment : Fragment() {
     private lateinit var userLocationLayer: UserLocationLayer
     private lateinit var mapKit: MapKit
     private lateinit var mapObjects: MapObjectCollection
+    private val inputListener = object : InputListener {
+        override fun onMapTap(map: Map, point: Point) {
+            //nothing to do
+        }
+
+        override fun onMapLongTap(map: Map, point: Point) {
+            drawPlacemark(point, mapObjects)
+        }
+    }
 
     @SuppressLint("MissingPermission")
     private val requestPermissionLauncher =
@@ -61,6 +73,7 @@ class MapFragment : Fragment() {
 
         val binding = FragmentMapBinding.inflate(inflater, container, false)
         mapView = binding.mapview
+        mapView.map.addInputListener(inputListener)
         mapObjects = mapView.map.mapObjects.addCollection()
 
         moveToLocation()
@@ -68,15 +81,6 @@ class MapFragment : Fragment() {
         userLocationLayer = mapKit.createUserLocationLayer(mapView.mapWindow).apply {
             isVisible = true
         }
-        userLocationLayer.setTapListener { point ->
-            Toast.makeText(context, "${point.latitude} x ${point.longitude}", Toast.LENGTH_SHORT)
-                .show()
-            Log.i("myLocation", "latitude:  ${point.latitude}")
-            Log.i("myLocation", "longitude:  ${point.longitude}")
-        }
-
-        val point = Point(targetLocation.latitude + 1F, targetLocation.longitude + 1F)
-        drawPlacemark(point, mapObjects)
 
         return binding.root
     }
@@ -122,34 +126,24 @@ class MapFragment : Fragment() {
     }
 
     private fun drawPlacemark(point: Point, mapObjects: MapObjectCollection) {
-        val context = requireActivity().applicationContext
-        val view = View(context).apply {
-            background = getDrawable(
-                context,
-                R.drawable.ic_baseline_location_on_24
-            )
-        }
-        mapObjects.addPlacemark(point, ViewProvider(view))
+        val imageProvider = ImageProvider.fromBitmap(drawSimpleBitmap())
+        mapObjects.addPlacemark(point, imageProvider)
+
         Log.i("myLocation", "newPoint: ${point.longitude} x ${point.longitude}")
     }
 
-    private fun drawSimpleBitmap(text: String): Bitmap {
-        val picSize = 20
+    private fun drawSimpleBitmap(): Bitmap {
+        val picSize = 50
         val bitmap = Bitmap.createBitmap(picSize, picSize, Bitmap.Config.ARGB_8888);
         val canvas = Canvas(bitmap)
-        // отрисовка плейсмарка
         val paint = Paint()
         paint.color = Color.GREEN
         paint.style = Paint.Style.FILL
-        canvas.drawCircle(picSize / 2F, picSize / 2F, picSize / 2F, paint);
-        // отрисовка текста
-        paint.color = Color.WHITE
-        paint.isAntiAlias = true
-        paint.textSize = 5F
-        paint.textAlign = Paint.Align.CENTER;
-        canvas.drawText(
-            text, picSize / 2F,
-            picSize / 2F - ((paint.descent() + paint.ascent()) / 2F), paint
+        canvas.drawCircle(
+            picSize / 2F,
+            picSize / 2F,
+            picSize / 2F,
+            paint
         )
         return bitmap
     }
