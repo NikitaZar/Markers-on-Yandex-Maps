@@ -30,5 +30,8 @@
         <action
             android:id="@+id/action_listFragment_to_mapFragment"
             app:popUpTo="@id/mapFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_editFragment"
+            app:destination="@id/editFragment" />
     </fragment>
 </navigation>

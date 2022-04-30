@@ -53,7 +53,8 @@ class MapFragment : Fragment() {
                 GlobalConstants.KEY_POINT,
                 bundleOf(
                     GlobalConstants.KEY_LATITUDE to point.latitude,
-                    GlobalConstants.KEY_LONGITUDE to point.longitude
+                    GlobalConstants.KEY_LONGITUDE to point.longitude,
+                    GlobalConstants.KEY_ID to 0L
                 )
             )
             findNavController().navigate(R.id.action_mapFragment_to_editFragment)
@@ -88,10 +89,10 @@ class MapFragment : Fragment() {
         }
 
         viewModel.data.observe(viewLifecycleOwner) { data ->
-            if (data.markers.isNotEmpty()) {
+            if (data.isNotEmpty()) {
                 mapView.map.mapObjects.clear()
                 mapObjects = mapView.map.mapObjects.addCollection()
-                data.markers.forEach { marker ->
+                data.forEach { marker ->
                     val point = Point(marker.latitude, marker.longitude)
                     drawPlacemark(point, mapObjects)
                 }

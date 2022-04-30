@@ -1,39 +1,25 @@
 package ru.maps.markersonyandexmaps.viewModel
 
-import android.content.Context
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.maps.markersonyandexmaps.dto.Marker
-import ru.maps.markersonyandexmaps.model.FeedModel
 import ru.maps.markersonyandexmaps.repository.MarkerRepository
 import ru.maps.markersonyandexmaps.util.SingleLiveEvent
 import javax.inject.Inject
 
-private val empty = Marker(
-    id = 0L,
-    description = "",
-    latitude = 0.0,
-    longitude = 0.0
-)
-
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class MarkerViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
     private val repository: MarkerRepository
 ) : ViewModel() {
 
-    val data: LiveData<FeedModel> =
-        repository.data.map {
-            FeedModel(it)
-        }.asLiveData(Dispatchers.Default)
+    val data: LiveData<List<Marker>> =
+        repository.data.asLiveData(Dispatchers.Default)
 
-    private val edited = MutableLiveData(empty)
+    val edited = MutableLiveData(empty)
 
     private val _markerCreated = SingleLiveEvent<Unit>()
 
@@ -57,7 +43,21 @@ class MarkerViewModel @Inject constructor(
         repository.remove(id)
     }
 
-    fun getMarker(id: Long) = viewModelScope.launch {
-        repository.getMarker(id)
+    fun getMarker(id: Long): LiveData<Marker> {
+        val marker = MutableLiveData<Marker>()
+        viewModelScope.launch {
+            marker.postValue(repository.getMarker(id))
+        }
+        return marker
     }
+
+
 }
+
+private val empty = Marker(
+    id = 0L,
+    description = "",
+    latitude = 0.0,
+    longitude = 0.0
+)
+

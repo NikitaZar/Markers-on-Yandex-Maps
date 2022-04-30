@@ -1,75 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical">
+    android:gravity="clip_vertical"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bt_delete"
+        style="@style/Widget.AppTheme.CommonIconOnlyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="@dimen/space2x"
+        app:icon="@drawable/ic_baseline_delete_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bt_delete"
-            style="@style/Widget.AppTheme.CommonIconOnlyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space2x"
-            app:icon="@drawable/ic_baseline_delete_24" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bt_edit"
-            style="@style/Widget.AppTheme.CommonIconOnlyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space2x"
-            app:icon="@drawable/ic_baseline_edit_24" />
-    </LinearLayout>
-
-    <LinearLayout
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bt_edit"
+        style="@style/Widget.AppTheme.CommonIconOnlyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="@dimen/space2x"
+        app:icon="@drawable/ic_baseline_edit_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_delete" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/latitude"
-            android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/latitude"
+        android:layout_width="@dimen/space32x"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space2x"
+        android:hint="@string/latitude"
+        app:layout_constraintStart_toEndOf="@id/bt_delete"
+        app:layout_constraintEnd_toStartOf="@id/longitude"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space2x"
-            android:hint="@string/latitude">
+            android:focusable="false" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/longitude"
+        android:layout_width="@dimen/space32x"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space2x"
+        android:hint="@string/longitude"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/latitude"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/longitude"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space2x"
-            android:hint="@string/longitude">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+            android:focusable="false" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/description"
-        android:layout_width="@dimen/space80x"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/description">
+        android:layout_margin="@dimen/space2x"
+        android:hint="@string/description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/bt_edit"
+        app:layout_constraintTop_toBottomOf="@id/latitude">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/space2x"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:focusable="false" />
     </com.google.android.material.textfield.TextInputLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
