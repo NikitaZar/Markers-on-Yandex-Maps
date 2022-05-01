@@ -14,11 +14,13 @@
 
         <TextView
             android:id="@+id/description"
-            android:layout_width="@dimen/space44x"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space8x"
             android:text="@string/description"
             android:textSize="20sp"
+            android:singleLine="false"
+            app:layout_constraintEnd_toStartOf="@id/barrier"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
