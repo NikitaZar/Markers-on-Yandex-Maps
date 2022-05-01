@@ -15,6 +15,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.LocationServices
 import com.yandex.mapkit.Animation
@@ -38,7 +40,7 @@ import ru.maps.markersonyandexmaps.viewModel.MarkerViewModel
 class MapFragment : Fragment() {
 
     private val viewModel: MarkerViewModel by viewModels(ownerProducer = ::requireParentFragment)
-    private var targetLocation = Point(59.945933, 30.320045)
+    private var defaultCameraLocation = Point(59.945933, 30.320045)
     private lateinit var mapView: MapView
     private lateinit var userLocationLayer: UserLocationLayer
     private lateinit var mapKit: MapKit
@@ -82,7 +84,9 @@ class MapFragment : Fragment() {
         mapView.map.addInputListener(inputListener)
         mapObjects = mapView.map.mapObjects.addCollection()
 
-        moveToLocation()
+        getUserLocation(defaultCameraLocation).observe(viewLifecycleOwner) {
+            moveToLocation(mapView, it)
+        }
 
         userLocationLayer = mapKit.createUserLocationLayer(mapView.mapWindow).apply {
             isVisible = true
@@ -114,32 +118,33 @@ class MapFragment : Fragment() {
         super.onStop()
     }
 
-    private fun moveToLocation() {
-        mapView.map.move(
-            CameraPosition(targetLocation, 14.0f, 0.0f, 0.0f),
-            Animation(Animation.Type.SMOOTH, 5F),
-            null
-        )
+    private fun getUserLocation(defaultLocation: Point): LiveData<Point> {
 
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        val userLocation = MutableLiveData(defaultLocation)
         when (PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) -> {
                 fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                    targetLocation = Point(location.latitude, location.longitude)
-                    mapView.map.move(
-                        CameraPosition(targetLocation, 14.0f, 0.0f, 0.0f),
-                        Animation(Animation.Type.SMOOTH, 5F),
-                        null
-                    )
+                    val point = Point(location.latitude, location.longitude)
+                    userLocation.postValue(point)
                 }
             }
             else -> {
                 requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             }
         }
+        return userLocation
+    }
+
+    private fun moveToLocation(mapView: MapView, targetLocation: Point) {
+        mapView.map.move(
+            CameraPosition(targetLocation, 14.0f, 0.0f, 0.0f),
+            Animation(Animation.Type.SMOOTH, 5F),
+            null
+        )
     }
 
     private fun drawPlacemark(point: Point, mapObjects: MapObjectCollection) {
