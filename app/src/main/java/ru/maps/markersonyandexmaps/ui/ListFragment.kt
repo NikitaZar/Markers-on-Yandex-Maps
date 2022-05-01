@@ -11,6 +11,8 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ru.maps.markersonyandexmaps.R
 import ru.maps.markersonyandexmaps.adapter.MarkerAdapter
@@ -18,6 +20,7 @@ import ru.maps.markersonyandexmaps.adapter.OnInteractionListener
 import ru.maps.markersonyandexmaps.application.GlobalConstants
 import ru.maps.markersonyandexmaps.databinding.FragmentListBinding
 import ru.maps.markersonyandexmaps.dto.Marker
+import ru.maps.markersonyandexmaps.view.SpacingItemDecorator
 import ru.maps.markersonyandexmaps.viewModel.MarkerViewModel
 
 @AndroidEntryPoint
@@ -45,6 +48,10 @@ class ListFragment : Fragment() {
         })
 
         binding.markerList.adapter = adapter
+
+        binding.markerList.addItemDecoration(
+            SpacingItemDecorator(20)
+        )
 
         viewModel.edited.observe(viewLifecycleOwner) { marker ->
             if (marker.id != 0L) {

@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import ru.maps.markersonyandexmaps.R
 import ru.maps.markersonyandexmaps.application.GlobalConstants
 import ru.maps.markersonyandexmaps.databinding.FragmentEditBinding
 import ru.maps.markersonyandexmaps.dto.Marker
@@ -51,7 +52,7 @@ class EditFragment : Fragment() {
             }
         }
 
-        binding.btCreate.setOnClickListener {
+        binding.btDone.setOnClickListener {
             val description = binding.description.editText?.text.toString()
             viewModel.edit(Marker(id, description, latitude, longitude))
             viewModel.save()
