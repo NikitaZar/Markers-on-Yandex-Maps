@@ -7,4 +7,7 @@
     <string name="description">Description</string>
     <string name="add_marker_information">Add marker information</string>
     <string name="done">Done</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="create_marker">Create marker</string>
 </resources>

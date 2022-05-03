@@ -20,6 +20,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKit
 import com.yandex.mapkit.MapKitFactory
@@ -55,15 +56,24 @@ class MapFragment : Fragment() {
         }
 
         override fun onMapLongTap(map: Map, point: Point) {
-            setFragmentResult(
-                GlobalConstants.KEY_POINT,
-                bundleOf(
-                    GlobalConstants.KEY_LATITUDE to point.latitude,
-                    GlobalConstants.KEY_LONGITUDE to point.longitude,
-                    GlobalConstants.KEY_ID to 0L
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("${context?.getString(R.string.create_marker)}?")
+                .setMessage(
+                    "${context?.getString(R.string.latitude)}: ${point.latitude}\n" +
+                            "${context?.getString(R.string.longitude)}: ${point.longitude}"
                 )
-            )
-            findNavController().navigate(R.id.action_mapFragment_to_editFragment)
+                .setNegativeButton(context?.getString(R.string.cancel)) { _, _ -> }
+                .setPositiveButton(context?.getString(R.string.create)) { _, _ ->
+                    setFragmentResult(
+                        GlobalConstants.KEY_POINT,
+                        bundleOf(
+                            GlobalConstants.KEY_LATITUDE to point.latitude,
+                            GlobalConstants.KEY_LONGITUDE to point.longitude,
+                            GlobalConstants.KEY_ID to 0L
+                        )
+                    )
+                    findNavController().navigate(R.id.action_mapFragment_to_editFragment)
+                }.show()
         }
     }
 
