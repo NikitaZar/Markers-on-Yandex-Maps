@@ -46,6 +46,7 @@ class MapFragment : Fragment() {
     private lateinit var userLocationLayer: UserLocationLayer
     private lateinit var mapKit: MapKit
     private lateinit var mapObjects: MapObjectCollection
+    private lateinit var userLocation: Point
     private var isMoveToPoint = false
 
     private val inputListener = object : InputListener {
@@ -95,9 +96,14 @@ class MapFragment : Fragment() {
         }
 
         getUserLocation(defaultCameraLocation).observe(viewLifecycleOwner) {
+            userLocation = it
             if (!isMoveToPoint) {
-                moveToLocation(mapView, it)
+                moveToLocation(mapView, userLocation)
             }
+        }
+
+        binding.btToMyLocation.setOnClickListener {
+            moveToLocation(mapView, userLocation)
         }
 
         userLocationLayer = mapKit.createUserLocationLayer(mapView.mapWindow).apply {
