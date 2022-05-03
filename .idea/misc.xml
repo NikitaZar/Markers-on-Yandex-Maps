@@ -3,22 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.178" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.196" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/drawable/ic_baseline_list_24.xml" value="0.196" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.196" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/drawable/ic_launcher_background.xml" value="0.178" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.142" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/layout/activity_app.xml" value="0.2" />
+        <entry key="..\:/Nikita/Documents/Netology/Markers-on-Yandex-Maps/app/src/main/res/layout/card_marker.xml" value="0.33" />
+        <entry key="..\:/Nikita/Documents/Netology/Markers-on-Yandex-Maps/app/src/main/res/layout/fragment_list.xml" value="0.18802083333333333" />
+        <entry key="..\:/Nikita/Documents/Netology/Markers-on-Yandex-Maps/app/src/main/res/layout/fragment_map.xml" value="0.5" />
         <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/layout/card_marker.xml" value="0.33" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/layout/fragment_edit.xml" value="0.33" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/layout/fragment_list.xml" value="0.33" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/layout/fragment_map.xml" value="0.20903300521134915" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/layout/marker_card.xml" value="0.18802083333333333" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/layout/tab.xml" value="0.18802083333333333" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.18802083333333333" />
-        <entry key="..\:/Nikita/Documents/Netology/MarkersYM/app/src/main/res/menu/nav_menu.xml" value="0.18802083333333333" />
       </map>
     </option>
   </component>

@@ -13,8 +13,6 @@ class MarkerViewHolder(
     fun bind(marker: Marker) {
         binding.apply {
             description.text = marker.description
-            latitude.editText?.setText(String.format("%.7f", marker.latitude))
-            longitude.editText?.setText(String.format("%.7f", marker.longitude))
 
             btDelete.setOnClickListener {
                 onInteractionListener.onRemove(marker)

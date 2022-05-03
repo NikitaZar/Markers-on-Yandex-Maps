@@ -16,4 +16,5 @@
     <dimen name="space44x">176dp</dimen>
     <dimen name="space48x">192dp</dimen>
     <dimen name="space80x">320dp</dimen>
+    <dimen name="button_size">32dp</dimen>
 </resources>
