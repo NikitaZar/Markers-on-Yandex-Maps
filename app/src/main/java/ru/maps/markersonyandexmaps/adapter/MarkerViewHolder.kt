@@ -1,6 +1,7 @@
 package ru.maps.markersonyandexmaps.adapter
 
 import androidx.recyclerview.widget.RecyclerView
+import com.yandex.mapkit.geometry.Point
 import ru.maps.markersonyandexmaps.databinding.CardMarkerBinding
 import ru.maps.markersonyandexmaps.dto.Marker
 
@@ -21,6 +22,10 @@ class MarkerViewHolder(
 
             btEdit.setOnClickListener {
                 onInteractionListener.onEdit(marker)
+            }
+
+            btNavigate.setOnClickListener {
+                onInteractionListener.onCameraPosition(marker.latitude, marker.longitude)
             }
         }
     }

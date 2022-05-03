@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yandex.mapkit.geometry.Point
 import dagger.hilt.android.AndroidEntryPoint
 import ru.maps.markersonyandexmaps.R
 import ru.maps.markersonyandexmaps.adapter.MarkerAdapter
@@ -44,6 +45,17 @@ class ListFragment : Fragment() {
 
             override fun onRemove(marker: Marker) {
                 viewModel.remove(marker.id)
+            }
+
+            override fun onCameraPosition(latitude: Double, longitude: Double) {
+                setFragmentResult(
+                    GlobalConstants.KEY_CAMERA_POSITION,
+                    bundleOf(
+                        GlobalConstants.KEY_CAMERA_POSITION_LATITUDE to latitude,
+                        GlobalConstants.KEY_CAMERA_POSITION_LONGITUDE to longitude
+                    )
+                )
+                findNavController().navigate(R.id.action_listFragment_to_mapFragment)
             }
         })
 

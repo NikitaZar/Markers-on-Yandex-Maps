@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -45,6 +46,8 @@ class MapFragment : Fragment() {
     private lateinit var userLocationLayer: UserLocationLayer
     private lateinit var mapKit: MapKit
     private lateinit var mapObjects: MapObjectCollection
+    private var isMoveToPoint = false
+
     private val inputListener = object : InputListener {
         override fun onMapTap(map: Map, point: Point) {
             //nothing to do
@@ -84,8 +87,17 @@ class MapFragment : Fragment() {
         mapView.map.addInputListener(inputListener)
         mapObjects = mapView.map.mapObjects.addCollection()
 
+        setFragmentResultListener(GlobalConstants.KEY_CAMERA_POSITION) { _, bundle ->
+            val latitude = bundle.getDouble(GlobalConstants.KEY_CAMERA_POSITION_LATITUDE)
+            val longitude = bundle.getDouble(GlobalConstants.KEY_CAMERA_POSITION_LONGITUDE)
+            moveToLocation(mapView, Point(latitude, longitude))
+            isMoveToPoint = true
+        }
+
         getUserLocation(defaultCameraLocation).observe(viewLifecycleOwner) {
-            moveToLocation(mapView, it)
+            if (!isMoveToPoint) {
+                moveToLocation(mapView, it)
+            }
         }
 
         userLocationLayer = mapKit.createUserLocationLayer(mapView.mapWindow).apply {
